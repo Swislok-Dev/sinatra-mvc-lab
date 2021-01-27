@@ -6,13 +6,13 @@ class PigLatinizer
 
   def vowel?(letter)
     letter.downcase
-    letter.match? /[aeoui]/
+    letter.match? /[aeouiAEOIU]/
   end
 
   def pig_latin(word)
     first_letter = word[0]  
     letters = word.split("")    
-    if vowel?(first_letter)
+    if vowel?(word[0])
       letters << "way"
     else
       consonants = []
