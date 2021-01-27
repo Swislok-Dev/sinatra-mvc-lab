@@ -1,46 +1,33 @@
 class PigLatinizer
-  attr_reader :text
 
-  def initialize(text)
-    @text = text.downcase
-  end
+  # def initialize(text)
+  #   @text = text.downcase
+  # end
 
   def vowel?(letter)
+    letter.downcase
     letter.match? /[aeoui]/
   end
 
-  # def consonant?
-  #   letter = self.text
-  #   letter.match /[bcdfghjklmnpqrstvwxyz]/
-  # end
-
-  def input_string(string)
-    s1 = string.split(" ")
-    s2 = s1.map { |word| pig_latin(word)}
-    s2.join(" ")
-  end
-
-
-  def piglatinize(phrase)
-    
-    first_letter = phrase[0]
+  def pig_latin(word)
+    first_letter = word[0]  
+    letters = word.split("")    
     if vowel?(first_letter)
-      "#{phrase}way"
+      letters << "way"
     else
       consonants = []
-      consonants << first_letter
-      if !vowel?(phrase[1])
-        consonants << phrase[1]
-        if !vowel?(phrase[2])
-          consonants << phrase[2]
-          if !vowel?(phrase[3])
-            consonants << phrase[3]
-          end
-        end
+      until vowel?(letters[0])
+        letters << letters.shift
       end
-      "#{phrase[consonants.length..-1] + consonants.join + "ay"}"
+      letters << "ay"
     end
-
+    letters.join
   end
-
+  
+  def piglatinize(string)
+    words = string.split(" ")
+    words.map!{ |word| pig_latin(word)}
+    words.join(" ")
+  end
 end
+
